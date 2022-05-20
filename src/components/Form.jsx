@@ -1,7 +1,10 @@
 import { Fragment } from "react";
 import { BRANDS, YEARS, PLANS } from "../constants/index.js";
+import useQuoter from "../hooks/useQuoter.jsx";
 
 const Form = () => {
+  const { data, handleChangeData } = useQuoter();
+
   return (
     <>
       <form action="">
@@ -13,7 +16,9 @@ const Form = () => {
           <select
             name="brand"
             className="w-full p-3 bg-white border
-                  border-gray-200">
+                  border-gray-200"
+            onChange={(e) => handleChangeData(e)}
+            value={data.brand}>
             <option value="">-- Select Brand --</option>
 
             {BRANDS.map((brand) => (
@@ -29,9 +34,11 @@ const Form = () => {
           </label>
 
           <select
-            name="brand"
+            name="year"
             className="w-full p-3 bg-white border
-                  border-gray-200">
+                  border-gray-200"
+            onChange={(e) => handleChangeData(e)}
+            value={data.year}>
             <option value="">-- Select Year --</option>
 
             {YEARS.map((year) => (
@@ -49,7 +56,12 @@ const Form = () => {
             {PLANS.map((plan) => (
               <Fragment key={plan.id}>
                 <label>{plan.name}</label>
-                <input type="radio" name="plan" value={plan.id} />
+                <input
+                  type="radio"
+                  name="plan"
+                  value={plan.id}
+                  onChange={(e) => handleChangeData(e)}
+                />
               </Fragment>
             ))}
           </div>
