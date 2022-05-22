@@ -1,13 +1,27 @@
 import { Fragment } from "react";
 import { BRANDS, YEARS, PLANS } from "../constants/index.js";
 import useQuoter from "../hooks/useQuoter.jsx";
+import Error from "./Error.jsx";
 
 const Form = () => {
-  const { data, handleChangeData } = useQuoter();
+  const { data, handleChangeData, error, setError, quoteInsurance } =
+    useQuoter();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (Object.values(data).includes("")) {
+      setError("All fields are Required");
+      return;
+    }
+    setError("");
+    quoteInsurance();
+  };
 
   return (
     <>
-      <form action="">
+      {error && <Error />}
+      <form onSubmit={handleSubmit}>
         <div className="my-5">
           <label className="block mb-3 font-bold text-gray-400 uppercase">
             Brand
@@ -22,7 +36,7 @@ const Form = () => {
             <option value="">-- Select Brand --</option>
 
             {BRANDS.map((brand) => (
-              <option key={brand.id} id={brand.id}>
+              <option key={brand.id} value={brand.id}>
                 {brand.name}
               </option>
             ))}
